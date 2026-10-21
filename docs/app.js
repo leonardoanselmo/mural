@@ -1,7 +1,7 @@
 const $ = (id) => document.getElementById(id);
 // Rodando local, a busca vem do server.py; publicado no GitHub Pages, do Cloudflare Worker.
 const LOCAL = ["localhost", "127.0.0.1"].includes(location.hostname);
-const API = LOCAL ? "" : "https://mural.SUBDOMINIO.workers.dev";
+const API = LOCAL ? "" : "https://mural.leonardo-anselmo.workers.dev";
 const SUGESTOES = ["Flamengo futebol", "Inteligência artificial", "Economia Brasil", "Fórmula 1", "Cinema", "Saúde", "Tecnologia", "Recife"];
 const TONS = ["#f3e3d3", "#dfe9e1", "#e3e4f2", "#f2e0e4", "#e8e6d6", "#dbe8ee"];
 const POR_PAGINA = 24;
