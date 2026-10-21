@@ -2,6 +2,8 @@ const $ = (id) => document.getElementById(id);
 const SUGESTOES = ["Flamengo futebol", "Inteligência artificial", "Economia Brasil", "Fórmula 1", "Cinema", "Saúde", "Tecnologia", "Recife"];
 const TONS = ["#f3e3d3", "#dfe9e1", "#e3e4f2", "#f2e0e4", "#e8e6d6", "#dbe8ee"];
 const POR_PAGINA = 24;
+// Formatos (largura, altura) sorteados por notícia para o mural ter alturas variadas.
+const FORMATOS = [[3, 4], [2, 3], [4, 5], [1, 1], [3, 4], [9, 14], [4, 5], [5, 4], [2, 3]];
 
 let noticias = [];
 let termoAtual = "";
@@ -64,8 +66,18 @@ function meta(n) {
   );
 }
 
-function imagem(n, aoFalhar) {
-  const img = el("img", { src: n.imagem, alt: "", loading: "lazy" });
+function formato(n) {
+  return FORMATOS[hash(n.titulo) % FORMATOS.length];
+}
+
+// As miniaturas do Bing aceitam a largura na URL. Não pedimos recorte ao Bing
+// (acima do tamanho original ele preenche com branco); o CSS recorta com object-fit.
+function urlImagem(url, w) {
+  return url.includes("bing.com/th") ? `${url}&w=${w}` : url;
+}
+
+function imagem(n, aoFalhar, w = 640) {
+  const img = el("img", { src: urlImagem(n.imagem, w), alt: "", loading: "lazy" });
   img.onerror = aoFalhar;
   return img;
 }
@@ -74,7 +86,7 @@ function imagem(n, aoFalhar) {
 function criarDestaque(n) {
   const card = link(n, "destaque");
   card.append(
-    el("div", { class: "destaque-img" }, imagem(n, () => card.classList.add("sem-img"))),
+    el("div", { class: "destaque-img" }, imagem(n, () => card.classList.add("sem-img"), 1000)),
     el("div", { class: "destaque-texto" },
       el("span", { class: "selo" }, "Em destaque"),
       el("h2", {}, n.titulo),
@@ -85,24 +97,37 @@ function criarDestaque(n) {
   return card;
 }
 
-// Demais notícias: só imagem, título e fonte.
+// Demais notícias: foto em formato variado, com título e fonte por cima.
 function criarCard(n, i) {
   const card = link(n, "card");
   card.style.animationDelay = `${Math.min(i * 25, 350)}ms`;
   const virarTexto = () => {
-    card.classList.add("texto");
+    card.className = "card texto";
+    card.style.aspectRatio = "";
     card.style.setProperty("--tom", tom(n));
-    card.querySelector(".card-img")?.remove();
+    card.querySelector("img")?.remove();
   };
-  if (n.imagem) card.append(el("div", { class: "card-img" }, imagem(n, virarTexto)));
-  card.append(el("h3", {}, n.titulo), meta(n));
+  if (n.imagem) {
+    const [w, h] = formato(n);
+    card.classList.add("foto");
+    card.style.aspectRatio = `${w} / ${h}`;
+    // Formatos em retrato pedem mais resolução, porque o recorte usa só o miolo da foto.
+    card.append(imagem(n, virarTexto, h > w ? 900 : 640));
+  }
+  card.append(el("div", { class: "card-sobre" }, el("h3", {}, n.titulo), meta(n)));
   if (!n.imagem) virarTexto();
   return card;
 }
 
+function alturaEstimada(n) {
+  if (!n.imagem) return 0.5 + n.titulo.length / 130;
+  const [w, h] = formato(n);
+  return h / w;
+}
+
 function numColunas() {
   const w = $("mural").clientWidth;
-  return w < 560 ? 1 : w < 900 ? 2 : w < 1250 ? 3 : 4;
+  return w < 900 ? 2 : w < 1250 ? 3 : w < 1600 ? 4 : 5;
 }
 
 // Distribui na coluna mais "baixa" usando uma altura estimada, mantendo a ordem de leitura.
@@ -132,13 +157,13 @@ function render() {
   const resto = lista.filter((n) => n !== principal).slice(0, mostrando);
 
   $("topo-destaque").replaceChildren(criarDestaque(principal));
-  montar(resto.map(criarCard), resto.map((n) => (n.imagem ? 1 : 0.45 + n.titulo.length / 120)));
+  montar(resto.map(criarCard), resto.map(alturaEstimada));
   $("mais").hidden = lista.length - 1 <= mostrando;
 }
 
 function esqueletos() {
   $("topo-destaque").replaceChildren(el("div", { class: "esqueleto", style: "height:360px" }));
-  const alturas = Array.from({ length: 8 }, (_, i) => [300, 240, 280, 220][i % 4]);
+  const alturas = Array.from({ length: 10 }, (_, i) => [380, 280, 440, 320, 260][i % 5]);
   montar(alturas.map((h) => el("div", { class: "esqueleto", style: `height:${h}px` })), alturas);
 }
 

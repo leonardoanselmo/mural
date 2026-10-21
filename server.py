@@ -55,7 +55,7 @@ def bing(termo, inicio):
         for filho in item:
             nome = filho.tag.split("}")[-1]
             if nome == "Image" and filho.text:
-                imagem = filho.text.replace("http://", "https://", 1) + "&w=640"
+                imagem = filho.text.replace("http://", "https://", 1)
         fonte = next((f.text for f in item if f.tag.split("}")[-1] == "Source"), None)
         itens.append({
             "titulo": limpar(item.findtext("title")),
