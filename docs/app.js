@@ -328,14 +328,15 @@ async function buscar(termo, { historico = true } = {}) {
   $("resumo").textContent = `Buscando “${termo}”…`;
   esqueletos();
 
-  try {
-    const r = await fetch(`${API}/api/busca?q=${encodeURIComponent(termo)}`);
-    const dados = await r.json();
+  // As fontes às vezes falham por um instante; tenta de novo antes de dizer que não achou nada.
+  noticias = [];
+  for (let tentativa = 0; tentativa < 3 && !noticias.length; tentativa++) {
+    if (tentativa) await new Promise((r) => setTimeout(r, 1200 * tentativa));
+    try {
+      const r = await fetch(`${API}/api/busca?q=${encodeURIComponent(termo)}`, { cache: tentativa ? "reload" : "default" });
+      noticias = (await r.json()).noticias;
+    } catch {}
     if (id !== busca) return;
-    noticias = dados.noticias;
-  } catch {
-    if (id !== busca) return;
-    noticias = [];
   }
 
   if (!noticias.length) {

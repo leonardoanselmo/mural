@@ -76,7 +76,8 @@ function lerGoogle(xml) {
 }
 
 async function baixar(url) {
-  const r = await fetch(url, { headers: { "User-Agent": UA }, cf: { cacheTtl: 600, cacheEverything: true } });
+  // Sem cache aqui: às vezes o Bing responde vazio para a Cloudflare, e isso não pode ficar guardado.
+  const r = await fetch(url, { headers: { "User-Agent": UA } });
   if (!r.ok) throw new Error(`${r.status} em ${url}`);
   return r.text();
 }
@@ -135,7 +136,7 @@ export default {
       headers: {
         ...cors,
         "Content-Type": "application/json; charset=utf-8",
-        "Cache-Control": "public, max-age=300",
+        "Cache-Control": noticias.length ? "public, max-age=300" : "no-store",
       },
     });
   },
