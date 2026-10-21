@@ -1,6 +1,6 @@
 """Servidor do Mural de Notícias.
 
-Serve o front-end em ./static e expõe /api/busca?q=..., que junta notícias
+Serve o front-end em ./docs e expõe /api/busca?q=..., que junta notícias
 do Bing Notícias e do Google Notícias (RSS) dos últimos dias.
 Só usa a biblioteca padrão do Python: rode com `python server.py`.
 """
@@ -20,7 +20,7 @@ import xml.etree.ElementTree as ET
 PORTA = int(os.environ.get("PORT", 8765))
 DIAS = 7
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130 Safari/537.36"
-PASTA_STATIC = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
+PASTA_STATIC = os.path.join(os.path.dirname(os.path.abspath(__file__)), "docs")
 
 
 def baixar(url):
