@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mural de Notícias</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topo">
+    <a class="marca" href="/" aria-label="Início">
+      <span class="marca-icone" aria-hidden="true"></span>
+      <span class="marca-nome">Mural</span>
+    </a>
+    <form class="busca" id="busca" role="search">
+      <svg class="busca-lupa" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="campo" type="search" name="q" placeholder="Busque qualquer assunto — ex.: Flamengo futebol" autocomplete="off" aria-label="Buscar notícias">
+      <button type="submit">Buscar</button>
+    </form>
+  </header>
+
+  <main>
+    <section class="boas-vindas" id="boas-vindas">
+      <h1>As notícias que importam,<br>num mural só seu.</h1>
+      <p>Digite um assunto e veja o que saiu nos últimos 7 dias, em cards.</p>
+      <div class="sugestoes" id="sugestoes"></div>
+    </section>
+
+    <div class="barra" id="barra" hidden>
+      <p id="resumo"></p>
+      <div class="ordem" role="tablist" aria-label="Ordenar">
+        <button role="tab" data-ordem="relevancia" aria-selected="true">Relevantes</button>
+        <button role="tab" data-ordem="data" aria-selected="false">Recentes</button>
+      </div>
+    </div>
+
+    <div id="topo-destaque"></div>
+    <div class="mural" id="mural"></div>
+    <button class="mais" id="mais" type="button" hidden>Ver mais notícias</button>
+    <p class="vazio" id="vazio" hidden></p>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

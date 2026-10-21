@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "mural",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["C:/mural-noticias/server.py"],
+      "port": 8765
+    }
+  ]
+}
