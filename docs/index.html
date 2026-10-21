@@ -23,6 +23,8 @@
   </header>
 
   <main>
+    <nav class="temas" id="temas" aria-label="Seus temas e buscas recentes" hidden></nav>
+
     <section class="boas-vindas" id="boas-vindas">
       <h1>As notícias que importam,<br>num mural só seu.</h1>
       <p>Digite um assunto e veja o que saiu nos últimos 7 dias, em cards.</p>
@@ -31,17 +33,26 @@
 
     <div class="barra" id="barra" hidden>
       <p id="resumo"></p>
-      <div class="ordem" role="tablist" aria-label="Ordenar">
-        <button role="tab" data-ordem="relevancia" aria-selected="true">Relevantes</button>
-        <button role="tab" data-ordem="data" aria-selected="false">Recentes</button>
+      <div class="barra-acoes">
+        <button class="salvar" id="salvar" type="button" aria-pressed="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3 6.4 20.2l1.1-6.2L3 9.6l6.2-.9z"/></svg>
+          <span id="salvar-texto">Salvar tema</span>
+        </button>
+        <div class="ordem" role="tablist" aria-label="Ordenar">
+          <button role="tab" data-ordem="relevancia" aria-selected="true">Relevantes</button>
+          <button role="tab" data-ordem="data" aria-selected="false">Recentes</button>
+        </div>
       </div>
     </div>
 
     <div id="topo-destaque"></div>
     <div class="mural" id="mural"></div>
-    <button class="mais" id="mais" type="button" hidden>Ver mais notícias</button>
+    <div id="sentinela" aria-hidden="true"></div>
+    <p class="fim" id="fim" hidden>Você viu todas as notícias dos últimos 7 dias.</p>
     <p class="vazio" id="vazio" hidden></p>
   </main>
+
+  <div class="aviso" id="aviso" role="status" aria-live="polite"></div>
 
   <script src="app.js"></script>
 </body>
