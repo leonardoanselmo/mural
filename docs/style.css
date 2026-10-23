@@ -81,13 +81,19 @@ main { padding: 20px 32px 72px; max-width: 1440px; margin: 0 auto; }
 
 /* Página inicial: o campo de busca fica grande, logo abaixo do título */
 .boas-vindas .busca {
-  max-width: 640px; margin: 0 auto 26px; padding: 6px 6px 6px 22px;
+  flex: none; width: 100%; max-width: 640px; margin: 0 auto 26px; padding: 6px 6px 6px 22px;
   box-shadow: 0 2px 6px rgba(30, 25, 20, .05), 0 12px 32px rgba(30, 25, 20, .08);
 }
 .boas-vindas .busca-lupa { width: 20px; height: 20px; }
 .boas-vindas .busca input { font-size: 17px; padding: 13px 14px; text-align: left; }
 .boas-vindas .busca button { padding: 13px 26px; font-size: 15px; }
 .inicio .topo { justify-content: flex-start; }
+/* Na página inicial, título + busca ficam no meio da tela; o rodapé vem depois, ao rolar */
+.inicio .boas-vindas {
+  min-height: calc(100svh - 180px);
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 24px 0 48px;
+}
 .sugestoes { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; max-width: 640px; margin: 0 auto; }
 .sugestoes button {
   border: 1px solid var(--linha); background: var(--card); color: inherit;
