@@ -296,6 +296,15 @@ function esqueletos() {
 
 /* ---------- Busca ---------- */
 
+// Na página inicial o campo fica abaixo do título; com resultados, volta para o topo.
+function posicionarBusca(inicio) {
+  document.body.classList.toggle("inicio", inicio);
+  $("campo").placeholder = innerWidth < 640 ? "Busque qualquer assunto" : "Busque qualquer assunto — ex.: Flamengo futebol";
+  if (inicio) $("boas-vindas").insertBefore($("busca"), $("sugestoes"));
+  else document.querySelector(".topo").append($("busca"));
+  if (inicio && matchMedia("(hover: hover)").matches) $("campo").focus();
+}
+
 function limparMural() {
   restantes = [];
   mostrando = 0;
@@ -314,6 +323,7 @@ async function buscar(termo, { historico = true } = {}) {
   scrollTo(0, 0);
 
   $("boas-vindas").hidden = Boolean(termo);
+  posicionarBusca(!termo);
   $("vazio").hidden = true;
   desenharTemas();
   if (!termo) {

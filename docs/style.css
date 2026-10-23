@@ -78,6 +78,16 @@ main { padding: 20px 32px 72px; max-width: 1440px; margin: 0 auto; }
 .boas-vindas { text-align: center; padding: 80px 0 32px; }
 .boas-vindas h1 { font: 600 clamp(30px, 5vw, 54px)/1.1 Fraunces, Georgia, serif; letter-spacing: -.02em; margin: 0 0 14px; }
 .boas-vindas p { color: var(--suave); font-size: 17px; margin: 0 0 28px; }
+
+/* Página inicial: o campo de busca fica grande, logo abaixo do título */
+.boas-vindas .busca {
+  max-width: 640px; margin: 0 auto 26px; padding: 6px 6px 6px 22px;
+  box-shadow: 0 2px 6px rgba(30, 25, 20, .05), 0 12px 32px rgba(30, 25, 20, .08);
+}
+.boas-vindas .busca-lupa { width: 20px; height: 20px; }
+.boas-vindas .busca input { font-size: 17px; padding: 13px 14px; text-align: left; }
+.boas-vindas .busca button { padding: 13px 26px; font-size: 15px; }
+.inicio .topo { justify-content: flex-start; }
 .sugestoes { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; max-width: 640px; margin: 0 auto; }
 .sugestoes button {
   border: 1px solid var(--linha); background: var(--card); color: inherit;
@@ -268,4 +278,8 @@ main { padding: 20px 32px 72px; max-width: 1440px; margin: 0 auto; }
   .card.texto { padding: 18px 14px 16px; }
   .card.texto h3 { font-size: 18px; margin-bottom: 14px; }
   .boas-vindas { padding: 40px 0 24px; }
+  .inicio .marca-nome { display: inline; }
+  .boas-vindas .busca { padding: 4px 4px 4px 16px; }
+  .boas-vindas .busca input { font-size: 16px; padding: 11px 10px; }
+  .boas-vindas .busca button { padding: 11px 16px; }
 }
